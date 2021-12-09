@@ -1,30 +1,65 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
   <router-view/>
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+body {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.6rem;
+}
+p {
+  color: #283845;
+  font-size: 1.8rem;
+}
+.container {
+  width: 95%;
+  max-width: 120rem;
+  margin: 0 auto;
+}
+.container h2 {
+  margin-bottom: 3rem;
+  font-weight: 500;
+}
+.container h2 span {
+  color: #dc143c;
+  font-weight: 700;
+}
+a {
+  text-decoration: none;
+}
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+h1,
+h2,
+h3 {
+  font-family: "Montserrat", sans-serif;
+  margin: 2rem;
+  font-weight: 300;
   text-align: center;
-  color: #2c3e50;
+  word-break: break-word;
 }
-
-#nav {
-  padding: 30px;
+h1 {
+  font-size: 3.8rem;
 }
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+h2 {
+  font-size: 3.4rem;
 }
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+h3 {
+  font-size: 3rem;
+}
+h4 {
+  font-size: 2.6rem;
 }
 </style>

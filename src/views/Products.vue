@@ -1,16 +1,13 @@
 <template>
-    <div class="home">
-        <DashBoard titulo="Inicio"> 
-            <h1>Inicio</h1>
-        </DashBoard>
-    </div>
+  <DashBoard titulo="Productos"> 
+      <h2>Productos</h2>
+  </DashBoard>
 </template>
 
 <script>
 import DashBoard from '../components/DashBoard.vue';
-
 export default {
-    name: 'Home',
+    name: 'Productos',
     components: {
         DashBoard
     }

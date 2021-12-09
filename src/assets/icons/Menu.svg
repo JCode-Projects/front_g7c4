@@ -1,0 +1,6 @@
+<svg id="Menu" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <path id="Trazado_21" data-name="Trazado 21" d="M0,0H24V24H0Z" fill="none"/>
+  <line id="Línea_3" data-name="Línea 3" x2="16" transform="translate(4 6)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+  <line id="Línea_4" data-name="Línea 4" x2="16" transform="translate(4 12)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+  <line id="Línea_5" data-name="Línea 5" x2="16" transform="translate(4 18)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+</svg>
