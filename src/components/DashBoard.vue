@@ -12,7 +12,7 @@
         </div>
         <div class="dh-user">
           <div class="user">
-            <p>Camilo</p>
+            <p>{{userSession.name}}</p>
             <img src="../assets/icons/User.svg" width="45" height="45" alt="Imagen del usuario." loading="lazy" />
           </div>
         </div>
@@ -27,19 +27,19 @@
       <aside class="dh-sidebar">
         <div class="links">
           <router-link to="/inicio" class="option-link">
-            <img src="../assets/icons/Add.svg" width="50" height="50" alt="Inicio del dashboard." loading="lazy" />
+            <img src="../assets/icons/home.svg" width="50" height="50" alt="Inicio." loading="lazy" />
             <p>Inicio</p>
           </router-link>
           <router-link to="/productos" class="option-link">
-            <img src="../assets/icons/Add.svg" width="50" height="50" alt="Inicio del dashboard." loading="lazy" />
+            <img src="../assets/icons/products.svg" width="50" height="50" alt="Productos." loading="lazy" />
             <p>Productos</p>
           </router-link>
         </div>
         <div class="config">
-          <a href="/admin/configuracion" class="option-link">
-            <img src="../assets/icons/Settings.svg" width="50" height="50" alt="Visualizador de ventas." loading="lazy" />
-            <p>Configuración</p>
-          </a>
+          <router-link to="/logout" class="option-link error">
+            <img src="../assets/icons/logout.svg" width="50" height="50" alt="Cerrar Sesión." loading="lazy" />
+            <p>Cerrar Sesión</p>
+          </router-link>
         </div>
       </aside>
       <!-- Sidebar Dashboard -->
@@ -48,11 +48,15 @@
 </template>
 
 <script>
+import gql from 'graphql-tag';
+import Swal from 'sweetalert2';
+
 export default {
   name: "DashBoard",
   data: function() {
     return {
-      expand: localStorage.getItem("expand") ? localStorage.getItem("expand") == 't' ? true : false : false
+      expand: localStorage.getItem("expand") ? localStorage.getItem("expand") == 't' ? true : false : false,
+      userSession: {}
     };
   },
   methods: {
@@ -60,6 +64,53 @@ export default {
       this.expand = !this.expand;
       localStorage.setItem("expand", this.expand ? "t" : "f");
     },
+
+    validateSesion() {
+      const sesion = {
+        access: localStorage.getItem("access"),
+        refresh: localStorage.getItem("refresh"),
+        logged: localStorage.getItem("logged")
+      };
+
+      Object.keys(sesion).forEach(key => {
+        if (!sesion[key]) {
+          this.$router.push("/logout");
+        }
+      });
+
+      this.validarToken(sesion.access, sesion.refresh);
+    },
+
+    async validarToken(access, refresh) {
+      try {
+        let response = await this.$apollo.mutate({
+          mutation: gql`
+            mutation RefreshToken($refresh: String!) {
+              refreshToken(refresh: $refresh) {
+                access
+              }
+            }
+          `,
+          variables: {
+            refresh
+          }
+        });
+
+        localStorage.setItem("access", response.data.refreshToken.access);
+      } catch (error) {
+        Swal.fire({
+          title: "Error",
+          text: "No se pudo validar el token.",
+          icon: "error",
+          confirmButtonText: "Aceptar"
+        });
+        this.$router.push("/logout");
+      }
+    },
+
+    getUser() {
+      this.userSession = JSON.parse(localStorage.getItem("user"));
+    }
   },
   props: {
     titulo: {
@@ -67,8 +118,10 @@ export default {
       required: true,
     },
   },
-  created: function() {
+  mounted: function() {
     document.title = this.titulo;
+    this.validateSesion();
+    this.getUser();
   },
 };
 </script>
@@ -367,5 +420,9 @@ export default {
 .modal-config-user p {
   color: #283845;
   margin: 0 0 1rem 0;
+}
+
+.dashboard-content.expand .error:hover {
+  background-color: #eb1f48 !important;
 }
 </style>
